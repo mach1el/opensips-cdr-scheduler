@@ -1,0 +1,24 @@
+x-defaults: &defaults
+  restart: unless-stopped
+  security_opt:
+    - no-new-privileges:true
+  logging:
+    driver: json-file
+    options:
+      max-size: "10m"
+      max-file: "30"
+
+services:
+  data-export-service:
+    build: .
+    container_name: data-export-service
+    environment:
+      DATABASE_URL: "postgresql://user:pass@dbhost:5432/mydb"
+      TABLE_NAME: "events"
+      TIMESTAMP_COLUMN: "created_at"
+      RETENTION_DAYS: "7"
+      EXPORT_HOUR: "1"
+      CLEANUP_HOUR: "2"
+      EXPORT_DIR: "/app/exports"
+    volumes:
+      - ./exports:/app/exports
