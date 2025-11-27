@@ -20,7 +20,7 @@ COPY service.py .
 
 # Non-root user
 RUN useradd -r -u 1000 appuser && chown -R appuser /app
-USER appuser
+# USER appuser
 
 # Default export directory inside container
 ENV EXPORT_DIR=/app/exports
